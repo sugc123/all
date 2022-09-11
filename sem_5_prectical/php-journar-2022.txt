@@ -1,0 +1,297 @@
+
+  
+Employee :- 
+PHP Project Code & Demo 
+PHP 
+  
+Index.php 
+<?php $con = new mysqli('localhost','root','','php'); session_start(); 
+if(isset($_SESSION['login'])){ $hello = $_SESSION['name']; 
+}else{ header('Location:login.p 
+
+1 
+hp'); } ?> 
+<!DOCTYPE html> <html> 
+<head> <title>Index</title> 
+</head> <body> 
+PHP 
+
+2 
+<?php if(isset($_GET['id'])) { $id = $_GET['id']; $name = $_GET['name']; $city = $_GET['city']; $post = $_GET['post']; } ?> 
+<form action="data.php" method="POST" enctype="multipart/form-data"> 
+ID : <input type="text" name="id" value="<?php if(isset($_GET['id'])) 
+echo $id; ?>"> <br><br> 
+Name : <input type="text" name="name" value="<?php 
+if(isset($_GET['id'])) echo $name; ?>"> <br><br> 
+city : <input type="text" name="city" value="<?php 
+if(isset($_GET['id'])) echo $city; ?>"> 
+<br><br> Post : <select name="post"> 
+<?php $sql = "SELECT * FROM post"; $exe = $con->query($sql); while($row=$exe- >fetch_row()){ ?> 
+<option value="<?php echo $row[1]; ?>"><?php echo $row[1]; ?></option> 
+<?php } ?> 
+PHP 
+
+3 
+</select> <br><br> photo : <input type="file" name="photo"> <br><br> 
+<input type="submit" value="<?php if(isset($_GET['id'])) echo 'update'; else echo'insert'; ?> " name="<?php if(isset($_GET['id'])) echo 'update'; else echo 'insert'; ?>"> 
+<table> <tbody> 
+<?php 
+PHP 
+
+4 
+$sql = "SELECT * FROM test"; $exe = $con->query($sql); while ($row = $exe->fetch_assoc()){ ?> 
+<tr> <td><?php echo $row['id']; ?></td> <td><?php echo $row['name']; ?></td> <td><?php echo $row['city']; ?></td> <td><?php echo $row['post']; ?></td> 
+<td><a href="index.php?id=<?php echo $row['id']; ?>&name=<?php echo $row['name']; ?>&city=<?php echo $row['city']; ?>&post=<?php echo 
+$row['post']; 
+?>">update</a></td> <td><a href="data.php?id=<?php echo $row['id']; ?>">delete</a></td> 
+</tr> 
+<?php } ?> </tbody> 
+</table> </body> 
+</html> $con = new mysqli('localhost', 'root', '', 'php'); 
+Insert code - 
+if (isset($_POST['insert'])) { $id = $_POST['id']; 
+$name $city $post 
+= $_POST['name']; = $_POST['city']; 
+= $_POST['post']; 
+PHP 
+ 
+5 
+$inputimg = addslashes(file_get_contents($_FILES['photo']['tmp_name'])); 
+$sql = "INSERT INTO test(`id`, `name`, `city`, `post`, `image`) VALUES($id,'$name','$city','$post','$inputimg')"; 
+$exe = $con- 
+>query($sql);if ($exe) 
+{ header('Location:index.php'); 
+} else { header('Location:index.php?faild'); 
+} } 
+Update code - 
+if (isset($_POST['update'])) { $id = $_POST['id']; $name = $_POST['name']; $city = $_POST['city']; $post = $_POST['post']; 
+$sql = "UPDATE `test` SET `name`='$name',`city`='$city',`post`='$post',`image`='$img'WHERE id=$id"; 
+$exe = $con- >query($sql);if ($exe) { 
+header('Location:index.php'); } else { 
+header('Location:index.php?faild'); } 
+PHP 
+ 
+6 
+} 
+Delete code - 
+if (isset($_GET['id'])) { $id = $_GET['id']; 
+$sql = "DELETE FROM `test` WHERE id=$id"; $exe = $con- 
+>query($sql);if ($exe) { 
+header('Location:index.php'); } else { 
+header('Location:index.php?faild'); } 
+} 
+Post insert code - 
+if (isset($_POST['add'])) { $id = $_POST['id']; $post = $_POST['post']; $sql = "INSERT INTO `post`(`id`, `post`) VALUES ($id,'$post')"; $exe = $con- 
+>query($sql);if ($exe) { 
+header('Location:add.php'); } else { 
+header('Location:add.php?faild'); } 
+PHP 
+  
+7 
+} 
+Post insert code HTML - 
+<!DOCTYPE html> <html> <head> 
+<meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title> 
+add Post 
+</title> </head> 
+<body> <form action="data.php" method="POST"> 
+ID : <input type="text" name="id"> <br><br> Post : <input type="text" name="post"> <br><br> <input type="submit" name="add"> 
+</form> </body> 
+</html> 
+PHP 
+ 
+8 
+PHP 
+   
+Project Code :- 
+Session (login) & select data – 
+if(!isset($_SESSION['userlogi n'])){ 
+if(isset($_POST['loginnet'])) { 
+$UserID=$_POST['UserID']; 
+$userPassword=$_POST['userPassword']; $conn = new 
+mysqli("localhost","root","","bdicbank ");if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); 
+} 
+ 
+9 
+$sql ="SELECT * FROM account WHERE userid=$UserID and password ='$userPassword'" ; 
+$result =$conn->query($sql); $row=$result->fetch_assoc(); if ($row['password'] == $userPassword) { 
+$_SESSION['userlogin']=true; $_SESSION['data']=$row['use rid']; header("Location:netbanking.p hp"); 
+} else{ 
+header("Location:netlogin.php?error=Incorrect%20V alue"); } 
+}else{ header("Location:netlogin.php"); 
+} } 
+Session destroy code – 
+<?php session_start(); session_destro y(); header("Location:login.php"); ?> 
+PHP 
+  
+10 
+PHP 
+  
+Email code – 
+if(isset($_POST['Sendemail'])){ $toemail = $_POST['toemail']; $emailbody = $_POST['emailbody']; $emailcontent = $_POST['emailcontent']; 
+$email_to = "mailto:$toemail"; 
+$email_subject = "$emailbody"; 
+$email_body = "Hello This Email From BDIC Bank \n \n $emailcontent \n \n If This emailis not suitable to you , not able to read , any harmful content or any other pls First Contact Tothe bank"; 
+$headers = ["MIME-Version: 1.0\r\n", "$From"]; $headers .= "Content-Type: text/html; charset=UTF-8\r\n"; 
+
+11 
+$retval = mail($email_to,$email_subject,$email_body,$headers); 
+if($retval) { header('Location: Email.php'); 
+}else { header('Location: index.php'); 
+} } 
+Store Image (move in folder) code – 
+if(isset($_POST['Storeimage'])){ $acimg = $_FILES['acimg']['name']; 
+$acimg_temp = $_FILES['acimg']['tmp_name']; $acimg_folder = 'proofs/' . $acimg; 
+$sql = "INSERT INTO `account` (profilephoto ) VALUES (‘$acimg_folder’) ; 
+$row = $conn->query($sql); move_uploaded_file($acimg_temp, $acimg_folder); 
+if($row){ echo “done”; 
+else { 
+} 
+echo “fail”; } 
+PHP 
+ 
+12 
+Calculation code – 
+<?php include "../database.php"; $sql = "SELECT SUM(fund) from account"; $result = $conn->query($sql); while($row = mysqli_fetch_array($result)){ 
+<h4 class="mb-0"><?php echo $row['SUM(fund)'] ?> ₹</h4> 
+PHP 
+   
+13 
+PHP 
+
+Display data code – 
+<table class="table table-responsive-md"> <thead> 
+<tr> <th><strong>User Id</strong></th> <th><strong>NAME</strong></th> <th><strong>feedback</strong></th> 
+</tr> 
+</thead > 
+<tbody > 
+<?php include "../database.php"; 
+$sql = "SELECT * FROM `loan_query`"; $data = $conn->query($sql); while ($row = $data->fetch_assoc()){ 
+?> 
+<tr> <td><strong><?php echo $row['userid'] ?></strong></td> 
+<td><?php echo $row['name'] ?></td> 
+<td><?php echo $row['query'] ?></td> </tr> 
+<?php } 
+?> </tbody> 
+
+</table> 
+
+14 
+Flask Programs : 
+1] Create Flask application that accept customer name and age in URL and print message like “Welcome <customer name> ....you are <age> years old ...” 
+hello.py : 
+from flask import Flask, render_template, request app = Flask(__name__) 
+@app.route("/<name>/<age>") def new(name,age): 
+return render_template("index.html", name=name, age=age) 
+templates/index.html : 
+<!DOCTYPE html> <html> <body> <h1>Welcome {{name}} you are {{age}} Years old</h1> </body> 
+</html> url : 127.0.0.1:5000/Darshan/20 
+PHP 
+  
+15 
+2] Create flask application that have three pages, first for admin, second for student and third for teacher. According to the It will open and print relevant messages. 
+hello.py : 
+from flask import Flask, render_template, request app = Flask(__name__) 
+@app.route("/admin") def newq(): 
+return render_template("admin.html") 
+@app.route("/student") def newqw(): 
+return render_template("student.html") @app.route("/teacher") 
+PHP 
+ 
+16 
+def newqe(): return render_template("teacher.html") 
+admin.html : 
+<html> <head> 
+<title>admin page</title> </head> 
+<body> 
+</body> </html> 
+student.html : 
+<html> <head> 
+<h1>This is Admin page.</h1> 
+<title>Student page</title> </head> 
+<body> 
+</body> </html> 
+teacher.html : 
+<html> <head> 
+<h1>This is Student page.</h1> 
+<title>Teacher page</title> </head> 
+<body> 
+</body> </html> 
+<h1>This is Teacher page.</h1> 
+PHP 
+
+17 
+if chk == sum: 
+PHP 
+
+3] Create Flask Application that embed python code check the given number is Armstrong or not 
+hello.py : 
+from flask import Flask, render_template, request app = Flask(__name__) 
+@app.route('/check') def check(): 
+return render_template('armstrong.html') 
+@app.route('/num',methods=['POST','GET']) def num(): 
+if request.method == 'POST': num = request.form['arm'] sum = 0 chk = int(num) 
+temp = int(num) while temp > 0: 
+digit = temp % 10 sum += digit ** 3 temp //= 10 
+
+18 
+msg = f"This Number is {num} Armstrong Number" 
+return render_template('armstrong.html',message=msg) else: 
+msg = f"This Number is {num} Not Armstrong Number" return render_template('armstrong.html',message=msg) 
+armstrong.html : 
+<!DOCTYPE html> <html> <head> 
+<title>table</title> </head> 
+<body> <form action="http://127.0.0.1:5000/num" method="POST" > 
+<label>Enter Only digits : </label> 
+<input type="number" name="arm" placeholder="Enter Digits" required> 
+<br/> 
+<input type="submit" value="Submit" > </form> 
+<h1>{{ message }}</h1> </body> 
+</html> 
+PHP 
+ 
+19 
+4] create flask application that create form for personal information (first name , last name, mobile no, age, etc) and using request object display data in table format. 
+hello.py : 
+from flask import Flask, render_template, request app = Flask(__name__,template_folder="templates") 
+@app.route('/') def personalinfo(): 
+return render_template('personalinfo.html') 
+@app.route('/main' , methods = ['POST','GET']) def main(): 
+if request.method == 'POST': result = request.form 
+return render_template("main.html", result=result) 
+if __name__ == '__main__': app.run(debug=True) 
+personalinfo.html : 
+<!DOCTYPE html> <html> <head> 
+<title>Personal Information</title> </head> 
+<body> <form action="http://127.0.0.1:5000/main" method="POST" > 
+<label>Enter First Name : </label><br> <input type="text" name="fname"><br> 
+<label>Enter Last Name : </label><br> <input type="text" name="lname"><br> 
+<label>Enter Mobile No. : </label><br> 
+PHP 
+
+20 
+<input type="number" name="mno"><br> 
+<label>Enter Age : </label><br> <input type="number" name="age"><br><br> 
+<input type="submit" value="Submit" > </form> 
+</body> </html> 
+Main.html : 
+<!DOCTYPE html> <html> <head> 
+<title></title> <style> 
+table,td,th{ border: 2px solid; 
+} </style> 
+</head> <body> 
+<table> {% for key, value in result.items() %} <tr> 
+<th>{{key}}</th> 
+<td>{{value}}</td> <tr> 
+{% endfor %} </table> 
+</body> </html> 
+PHP 
+
+21 
+PHP 
+  
+22 
+
+  
+
+ 

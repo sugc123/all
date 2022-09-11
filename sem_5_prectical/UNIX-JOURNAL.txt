@@ -1,0 +1,349 @@
+1]	Write a script to display the according to the time like good morning, good afternoon, good evening and good night.
+
+#system time h=$(date +"%H")
+if [ $h -gt 6 -a $h -le 12 ]
+then
+echo "good morning" 
+elif [ $h -gt 12 -a $h -le 16 ] 
+then
+echo "good afternoon"
+ elif [ $h -gt 16 -a $h -le 20 ]
+ then
+echo "good evening" 
+elif [ $h -gt 20 -a $h -le 24 ] 
+then
+echo "good night" 
+elif [ $h -gt 1 -a $h -le 6 ]
+ then
+echo "good night"
+else 
+ echo "Invalid Hour"
+fi
+ 
+2]	Write script, using case statement to perform basic math operations(+,-
+,*,/,%).
+
+echo -e "Enter the No1 : \c" read no1
+echo -e "Enter the No2 : \c" read no2
+
+echo "** Arithmetic Operation **" 
+echo "Press 1 For Addition"
+echo "Press 2 For Substraction" 
+echo "Press 3 For Multiplication" 
+echo "Press 4 For Division"
+echo "Press 5 For Module"
+echo "**************************"
+ 
+echo	-e	"Enter	the Choice : \c"
+read	ch		
+ 
+case $ch in
+1)add=$(( $no1 + $no2 )) 
+echo "Addition Is : $add"
+;; 
+2)sub=$(( $no1 - $no2 ))
+echo "Substraction Is : $sub"
+;; 
+3)mul=`expr $no1 \* $no2`
+echo "Multiplication Is : $mul"
+;;
+ 4)div=`expr $no1 / $no2`
+ echo "Division Is : $div"
+;;
+ 5)mod=$(( $no1 % $no2 )) 
+echo "Module Is : $mod"
+;;
+*)echo "Wrong Choice"
+;;
+esac 
+
+ 
+3]	Write a script which calculate the percentage and give proper class to the student with pass or fail result.
+
+echo	-e "Enter	the	Name	: \c"	
+read	name				
+echo	-e "Enter	the	Sub1	Marks :	\c"
+read	s1				
+echo	-e "Enter	the	Sub2	Marks :	\c"
+read	s2				
+echo	-e "Enter	the	Sub3	Marks :	\c"
+read	s3				
+
+echo "Name : $name" echo "Sub1 : $s1" echo "Sub2 : $s2" echo "Sub3 : $s3"
+
+if test $s1 -lt 0 -o $s2 -lt 0 -o $s3 -lt 0 -o $s1 -gt 100 -o $s2 -gt 100 -o $s3 -gt 100
+then
+echo "Enter the Valid Marks"
+
+ 
+else
+ 
+
+total=$(($s1+$s2+$s3)) echo "Total Marks : $total"
+
+per=$(($total/3))
+echo "Percentage : $per"
+
+if test $s1 -lt 35 -o $s2 -lt 35 -o $s3 -lt 35 then
+ 
+
+else
+ 
+echo "Fail"
+
+if test $per -ge 90 -a $per -lt 100 then
+ 
+echo "Distinction"
+elif test $per -ge 80 -a $per -lt 90 then
+ 
+
+Distinction"
+ 
+echo "First Class With
+
+elif test $per -ge 70 -a $per -lt 80 then
+ 
+echo "First Class"
+elif test $per -ge 60 -a $per -lt 70
+ 
+then
+echo "Second Class"
+elif test $per -ge 50 -a $per -lt 60 then
+echo "Third Class"
+elif test $per -ge 35 -a $per -lt 50 then
+ 
+else fi
+fi
+fi
+ 
+echo "Pass" echo "Fail"
+ 
+
+Output :
+
+Enter the Name : Darshan Kikani Enter the Sub1 Marks : 95 Enter the Sub2 Marks : 80 Enter the Sub3 Marks : 78
+Name : Darshan Kikani Sub1 : 95
+Sub2 : 80
+Sub3 : 78
+Total Marks : 253 Percentage : 84
+First Class With Distinction
+
+4]	Write a script which enters username s& password & check that if the username = sugc & password=98765 then display the valid user message. Otherwise invalid user. [script gives maximum 3 attempts to the user.]
+
+i=1
+while [ $i -le 3 ] do
+do
+
+echo -e "Enter the Username : \c" read username
+echo -e "Enter the Password : \c" read password
+if test $username == "sugc" -a $password == "98765"
+then
+echo "Username is : $username"
+ 
+echo "Password is : $password" exit
+else
+echo "Invalid Username or Password"
+ 
+i=`expr $i + 1`
+done
+
+
+5]	Write down shell script to calculate gross salary of an employee.
+
+echo -e "Enter the Basic Salary : \c" read bsalary
+
+# pf = 10% # dp = 50% # da = 35%
+# ma = 3% # hra = 8%
+
+if test $bsalary -gt 0 then
+dp=$((($bsalary*50)/100)) echo "DP : $dp"
+
+da=$(((($bsalary*35)/100) + $dp)) echo "DA : $da"
+
+ma=$(((($bsalary*3)/100) + $dp)) echo "MA : $ma"
+
+hra=$(((($bsalary*8)/100) + $dp)) echo "HRA : $hra"
+
+pf=$(((($bsalary*10)/100) + $dp)) echo "PF : $pf"
+
+gsalary=$(($bsalary + $dp + $da + $hra + $ma -
+$pf))
+ 
+
+else fi
+ 
+echo "Gross Salary : $gsalary" echo "Enter Valid Salary"
+ 
+ 
+
+6]	Write a script to check whether the number or word is palindrome or not.
+
+echo -e "Enter the String : \c" read input
+reverse=""
+
+len=${#input}
+#for loop is awk command
+for (( i=$len-1; i>=0; i-- )) do
+reverse="$reverse${input:$i:1}"
+done
+if [ $input == $reverse ] then
+ 
+
+else fi
+ 
+echo "$input is palindrome" echo "$input is not palindrome"
+ 
+
+ 
+
+7]	Write a script to accept a number from user until he enters 0 & find sum of all that numbers.
+
+i=1 no1=0
+ 
+while [ $i -ne 0 ] do
+echo -e "Enter the No. : \c" read no
+if test $no -ne 0 then
+else fi
+ 
+no1=$(($no1+$no)) echo "Sum : $no1"
+
+exit
+ 
+i=`expr $i + 1`
+done
+
+
+8]	Write a script to enter the number & check whether the number is prime number or not.
+
+echo -e "Enter the No : \c" read no
+i=2 c=0
+while test $i -le `expr $no / 2` do
+if test `expr $no % $i` -eq 0
+ 
+then fi
+c=1
+i=`expr $i + 1`
+done
+if test $c -eq 0 then
+else fi
+echo "$no is Prime Number" echo "$no is Not Prime Number"
+ 
+
+ 
+
+9]	Write script to find out biggest number from given three nos. , nos. are supplies as command line argument. Print error if sufficient arguments are not supplied.
+
+#command line arguments no=$#
+if test $no -eq 0 then
+ 
+
+else
+ 
+echo "No Command Line Arguments"
+
+
+#command line index n1=$1
+#command line index n2=$2
+#command line index n3=$3
+
+if test $n1 -eq $n2 -a $n2 -eq $n3 then
+ echo "All the three numbers are equal" elif test $n1 -eq $n2 -a $n1 -gt $n3 -a $n2 -gt
+then
+echo "$n1 and $n2 are equal and max"
+
+elif test $n1 -eq $n3 -a $n1 -gt $n2 -a $n3 -gt
+
+then
+echo "$n1 and $n3 are equal and max" elif test $n2 -eq $n3 -a $n2 -gt $n1 -a $n3 -gt
+
+then
+echo "$n2 and $n3 are equal and max" elif test $n1 -gt $n2 -a $n1 -gt $n3
+then
+ 
+echo "$n1 is max number" elif test $n2 -gt $n1 -a $n2 -gt $n3 then
+ 
+else fi
+fi
+ 
+echo "$n2 is max number" echo "$n3 is max number"
+ 
+
+10]	Accept a string from terminal and echo suitable message if it does not have at least 10 characters.
+
+echo -e "Enter String : \c" read str
+
+#count the character len=`echo -n $str | wc -c`
+
+if test $len -lt 10 then
+
+ 
+
+else fi
+ 
+echo "plese Enter Minimum 10 charater	!"
+
+
+echo "Your String is Perfact"
+ 
+Output :
+
+Enter String : darshan0041 Your String is Perfact
+ 
+
+11]	Write a shell script that calculate the factorial of a number.
+
+echo -e "Enter a Number : \c" read no
+
+no1=$no f=1
+
+while [ $no -gt 1 ] do
+f=$((f * no))
+no=$((no - 1)) done
+
+echo "$f Is Factorial Of $no1" Output :
+
+12]	Write a shell script that read a pattern and search the pattern.
+
+echo -e "Enter Pattern :\c" read p
+echo -e "Enter File Name :\c" read f
+
+echo "Your Search Pattern Is :$p" #match the pattern in list file ls=$(grep -i $p $f)
+
+if test $p != $ls then
+else fi
+echo "Pattern Is Not Match In List" echo "Pattern Match In List : $p"
+File : $cat list one
+two three four five six seven eight nine ten
+
+ 
+
+13]	Write a shell script that takes command line argument number as meter and by default converts that no in centimeter.
+
+#command line argument echo "Enter Meters is : $@" m=$@
+cm=$(($m * 100))
+echo "Centimeters is : $cm cm" Output :
+$ sh meter_centemeter.sh 100 Enter Meters is : 100 Centimeters is : 10000 cm
+ 
+
+14]	Write a script to delete all vowels from particular string .
+
+echo -e "Enter String :\c" read str
+
+echo "Old String is : $str" #remove vovels
+newstr=$(echo $str | sed 's/[aeiouAEIOU]//g')
+ 
+echo "New String is : $newstr" Output :
+Enter String :shree uttar gujarat bca college Old String is : shree uttar gujarat bca college New String is : shr ttr gjrt bc cllg
+ 
+
+15]	Write a shell script to display the numbers from given range in the interval of 1 second one by one.
+
+echo -e "Enter the No : \c" read no
+
+i=1
+while [ $i -le $no ] do
+done
+echo "$i"
+#Interval of 1 second sleep 1
+i=`expr $i + 1`
+ 

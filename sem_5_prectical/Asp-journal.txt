@@ -1,0 +1,311 @@
+
+  
+
+ INDEX 
+Sr No. Program Name Signature 
+  
+
+Create ASP.NET application to maintain Product Information. 
+Create following table product (product id, product name, product image, product price, product manufacturing date, product quantity, product category) Design Proper Website and make necessary validation. Provide Insert, Update, Delete, Search facility for above table. Generate report in GridView. 
+  
+ASP.NET 
+ 
+2 
+ProtectedSubbtnadd_Click(sender AsObject, e AsEventArgs)
+ASP.NET 
+ImportsSystem.Data
+ImportsSystem.Data.SqlClient
+PartialClass_Default
+InheritsSystem.Web.UI.Page
+Dim con AsNewSqlConnection
+DimcmdAsNewSqlCommand
+DimconstrAsString = "Data
+Source=(LocalDB)\v11.0;AttachDbFilename=D:\asp\website1\App_Data\Dat
+abase.mdf;Integrated Security=True"
+DimcmdstrAsString
+DimadpAsSqlDataAdapter
+Dim ds AsDataTable
+Dim type AsString
+Dim cook AsNewHttpCookie("login")
+‘Insert 
+ 
+Handlesbtnadd.Click
+Try 
+
+DimstrimgAsString = FileUpload1.FileName.ToString()
+
+FileUpload1.PostedFile.SaveAs(Server.MapPath("upload/") + strimg)
+Ifoptnew.Checked = TrueThen
+type = optnew.Text
+EndIf 
+Ifoptold.Checked = TrueThen
+EndIf 
+type = optold.Text
+con = NewSqlConnection(constr)
+con.Open() 
+cmdstr = "Insert into product values('" + txtname.Text + "','" +
+txtqua.Text + "','" + strimg + "'," + txtprice.Text + ",'" +
+lstcat.Text + "','" + type + "','" + Calendar1.SelectedDate + "')"
+cmd = NewSqlCommand(cmdstr, con)
+cmd.ExecuteNonQuery()
+con.Close() 
+MsgBox("Product Inserted")
+fill() 
+Catch ex AsException
+MsgBox(ex.Message.ToString())
+EndTry
+EndSub
+
+3 
+‘Update 
+
+ProtectedSub btnadd0_Click(sender AsObject, e AsEventArgs) Handles
+
+btnadd0.Click
+Try 
+ASP.NET 
+DimstrimgAsString = FileUpload1.FileName.ToString()
+FileUpload1.PostedFile.SaveAs(Server.MapPath("upload/") + strimg)
+Ifoptnew.Checked = TrueThen
+type = optnew.Text
+EndIf 
+Ifoptold.Checked = TrueThen
+type = optold.Text
+EndIf 
+con.Open() 
+con = NewSqlConnection(constr)
+cmdstr = "update product set quantity='" + txtqua.Text + "',img='" +
+strimg + "',price=" + txtprice.Text + ",category='" + lstcat.Text +
+"',type='" + type + "',date='" + Calendar1.SelectedDate + "' where
+name='" + txtname.Text + "'"
+cmd = NewSqlCommand(cmdstr, con)
+cmd.ExecuteNonQuery()
+con.Close() 
+MsgBox("Product Updated")
+fill() 
+Catch ex AsException
+MsgBox(ex.Message.ToString())
+EndTry
+EndSub
+‘Delete 
+Try 
+
+ProtectedSub btnadd1_Click(sender AsObject, e AsEventArgs) Handles
+
+btnadd1.Click
+con = NewSqlConnection(constr)
+con.Open() 
+cmdstr = "delete from product where name='" + txtname.Text + "'"
+cmd = NewSqlCommand(cmdstr, con)
+cmd.ExecuteNonQuery()
+con.Close() 
+MsgBox("Product Deleted")
+fill() 
+Catch ex AsException
+MsgBox(ex.Message.ToString())
+EndTry
+EndSub
+
+4 
+
+Subfill() 
+
+Dim ds AsDataSet
+Try 
+‘Search 
+Try 
+ProtectedSubtxtsearch_TextChanged(sender AsObject, e AsEventArgs)
+ASP.NET 
+‘Gridview 
+con = NewSqlConnection(constr)
+con.Open() 
+cmdstr = "Select * from product"
+cmd = NewSqlCommand(cmdstr, con)
+adp = NewSqlDataAdapter(cmd)
+ds = NewDataSet
+adp.Fill(ds, "product")
+GridView1.DataSource = ds.Tables("product")
+GridView1.DataBind()
+Catch ex AsException
+MsgBox(ex.Message.ToString())
+EndTry
+EndSub
+ 
+Handlestxtsearch.TextChanged
+
+show() 
+EndSub 
+
+PrivateSubshow()
+Dim ds AsDataSet
+con.Open() 
+con = NewSqlConnection(constr)
+cmdstr = "Select * from product where quantity like '" +
+txtsearch.Text + "%'"
+cmd = NewSqlCommand(cmdstr, con)
+adp = NewSqlDataAdapter(cmd)
+ds = NewDataSet
+adp.Fill(ds, "product")
+GridView1.DataSource = ds.Tables("product")
+GridView1.DataBind()
+Catch ex AsException
+MsgBox(ex.Message.ToString())
+EndTry
+EndSub
+
+ProtectedSubbtnserach_Click(sender AsObject, e AsEventArgs)
+
+Handlesbtnserach.Click
+
+show() 
+EndSub 
+
+EndClass 
+5 
+
+‘Clear Data 
+
+Subclear() 
+
+txtname.Text = ""
+
+txtprice.Text = ""
+
+txtqua.Text = ""
+
+optnew.Checked = False
+optold.Checked = False
+
+EndSub 
+‘set Cookies 
+‘set Session 
+‘Check Cookies & Login
+Try 
+Else 
+ASP.NET 
+ProtectedSub Button1_Click(sender AsObject, e AsEventArgs) Handles
+Button1.Click
+cook.Values("adminid") = TextBox1.Text
+cook.Values("pass") = TextBox2.Text
+cook.Expires = DateTime.Now.AddMinutes(5)
+Response.Cookies.Add(cook)
+Response.Redirect("page3.aspx")
+EndSub 
+
+ProtectedSubsubmit_Click(sender AsObject, e AsEventArgs) Handles
+
+Button1.Click
+
+Session("adminid") = TextBox1.Text
+
+Session("pass") = TextBox2.Text
+
+EndSub 
+
+ProtectedSubPage_Load(sender AsObject, e AsEventArgs) HandlesMe.Load
+
+Dim id AsString
+
+DimidpassAsString
+
+clear() 
+
+6 
+id = Request.Cookies("login").Values("adminid").ToString()
+
+idpass = Request.Cookies("login").Values("pass").ToString()
+
+If id = "admin"Andidpass = "test"Then
+
+fill() 
+
+Literal1.Text = id
+
+Response.Redirect("page5.aspx?status=faild")
+
+EndIf 
+
+Catch ex AsException
+
+Response.Redirect("page5.aspx?status=faild")
+
+EndTry
+EndSub
+CSS File :- 
+*{ 
+} 
+padding: 0; 
+ASP.NET 
+
+margin: 0; 
+ 
+font-family: sans-serif;
+
+.one { 
+
+width: 70%; 
+
+margin: 0auto;
+
+border: 1pxsolid#bebebe;
+
+padding: 20px;
+
+border-radius: 10px;
+
+line-height:25px;
+
+background: #f8f7f7;
+margin-bottom: 5px;
+}
+} 
+} 
+} 
+} 
+} 
+
+.ulon { 
+
+padding: 10px25px;
+
+.ulhead { 
+
+color: #7581af;
+
+font-size: 24px;
+
+padding: 13px05px0;
+
+.one1{ 
+
+margin: 0auto;
+
+border: 1pxsolid#bebebe;
+
+padding: 20px;
+
+border-radius: 10px;
+
+line-height:25px;
+
+background: #f8f7f7;
+
+margin-bottom: 5px;
+
+.newdivone { 
+
+display: flex;
+
+width: 80%; 
+
+margin: 0auto;
+
+align-items: center;
+
+.textbox { 
+
+width: 245px;
+height: 25px;
+
+padding: 6px12px;
+7 
